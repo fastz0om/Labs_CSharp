@@ -10,6 +10,15 @@ namespace Labs_CSharp
     {
         static void Main(string[] args)
         {
+            Menu.ClearMenuItems();
+            Menu.AddMenuItem(new MenuItems.MenuItemExit());
+            Menu.AddMenuItem(new MenuItems.MenuItemHelloWorld());
+            Menu.AddMenuItem(new MenuItems.MenuItemCalculator());
+            
+            while (true)
+            {
+                Menu.Execute();
+            }
         }
     }
 }
