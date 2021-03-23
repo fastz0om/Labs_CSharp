@@ -6,14 +6,27 @@ using System.Threading.Tasks;
 
 namespace Labs_CSharp.MenuItems
 {
+    //Структура для аргумента
+    struct Argument
+    {
+        //Значение аргумента
+        public int iValue;
+        //Описание аргумента
+        public string sDeskription;
+    }
+
+
     //Класс меню "Calc"
     public class MenuItemCalculator : MenuItemTemplate
     {
         //Текущая формула
-        private string _formula = "x+y+z";
+        private string _formula = "X/Z+Y^2";
 
         //Аргументы для расчета формулы
-        private int _x, _y, _z;
+        private Argument g_aX = new Argument { sDeskription = "X" };
+        private Argument g_aY = new Argument { sDeskription = "Y" };
+        private Argument g_aZ = new Argument { sDeskription = "Z" };
+        //    private Argument g_aX, g_aY, g_aZ;
 
         public string Formula { get { return _formula; } set { _formula = value; } }
 
@@ -25,26 +38,26 @@ namespace Labs_CSharp.MenuItems
         {
             Console.WriteLine("Расчет по формуле {0}", _formula);
             Console.WriteLine("Для расчета пожалуйста через пробел введите аргументы X,Y,Z: ");
-            string[] strArgs = Console.ReadLine().Split(' ');
-            double res = 0.0;
-            if (!CheckingArguments(strArgs))
+            string[] sArguments = Console.ReadLine().Split(' ');
+            double dResult = 0.0;
+            if (!CheckingArguments(sArguments))
             {
-                bool checkIs = false;
-                while (!checkIs)
+                bool bIsCurrent = false;
+                while (!bIsCurrent)
                 {
-                    strArgs = Console.ReadLine().Split(' ');
-                    checkIs = CheckingArguments(strArgs);
+                    sArguments = Console.ReadLine().Split(' ');
+                    bIsCurrent = CheckingArguments(sArguments);
                 }
-                res = Calculation();
+                dResult = Calculation();
             }
             else
             {
-                res = Calculation();
+                dResult = Calculation();
             }
-            Console.WriteLine("Ответ: {0:f3}", res);
+            Console.WriteLine("Ответ: {0:f3}", dResult);
         }
 
-        //Метод проверки аргументов на корректность
+        //Метод проверки аргументов
         private bool CheckingArguments(string[] arguments)
         {
             //Проверка на необходимое кол-во аргументов
@@ -54,60 +67,60 @@ namespace Labs_CSharp.MenuItems
                 return false;
             }
 
-            CheckingX(arguments[0]);
-            CheckingY(arguments[1]);
-            CheckingZ(arguments[2]);
+            CheckCorrectValue(arguments[0], g_aX.sDeskription, out g_aX.iValue);
+            CheckCorrectValue(arguments[1], g_aY.sDeskription, out g_aY.iValue);
+            CheckCorrectValue(arguments[2], g_aZ.sDeskription, out g_aZ.iValue);
             return true;
         }
 
-        //Проверка аргумента X
-        private void CheckingX(string x)
+        //Общая проверка аргументов на корректность (не являются ли строками или нулем (Z))
+        private void CheckCorrectValue(string value, string argDeskription, out int rResult)
         {
-            if (!Int32.TryParse(x, out _x))
+            string sTemp = value;
+            bool bIsCorrect = false;
+            int iTempResult = 0;
+            while (!bIsCorrect)
             {
-                string xTemp = x;
-                while (!Int32.TryParse(xTemp, out _x))
+                bIsCorrect = isNotNumber(sTemp, argDeskription);
+                if (bIsCorrect)
                 {
-                    Console.WriteLine("ОШИБКА: Некорректно задан аргумент X! Введите аргумент X: ");
-                    xTemp = Console.ReadLine();
+                    iTempResult = Int32.Parse(sTemp);
+                    if (argDeskription.Equals("Z"))
+                        bIsCorrect = isNotZero(iTempResult);
                 }
+                if (!bIsCorrect)
+                    sTemp = Console.ReadLine();
             }
+            rResult = iTempResult;
+
         }
 
-
-        //Проверка аргумента Y
-        private void CheckingY(string y)
+        //Проверка на ноль
+        private bool isNotZero(int a)
         {
-            if (!Int32.TryParse(y, out _y))
+            if (a.Equals(0))
             {
-                string yTemp = y;
-                while (!Int32.TryParse(yTemp, out _y))
-                {
-                    Console.WriteLine("ОШИБКА: Некорректно задан аргумент Y! Введите аргумент Y: ");
-                    yTemp = Console.ReadLine();
-                }
+                Console.WriteLine("ОШИБКА: Аргумент Z не может быть равен нулю! Повторите попытку: ");
+                return false;
             }
+            return true;
         }
 
-        //Проверка аргумента Z
-        private void CheckingZ(string z)
+        //Провекра на число
+        private bool isNotNumber(string value, string description)
         {
-            if (!Int32.TryParse(z, out _z))
+            if (!Int32.TryParse(value, out int num))
             {
-                string zTemp = z;
-                while (!Int32.TryParse(zTemp, out _z))
-                {
-                    Console.WriteLine("ОШИБКА: Некорректно задан аргумент Z! Введите аргумент Z: ");
-                    zTemp = Console.ReadLine();
-                }
+                Console.WriteLine("ОШИБКА: Аргумент {0} не является числом! Повторите попытку: ", description);
+                return false;
             }
+            return true;
         }
 
-        //Рассчет по формуле
+        //Расчет по формуле
         private double Calculation()
         {
-            //  return _x * _y % _z;
-            return _x + _y + _z;
+            return (double)g_aX.iValue / g_aZ.iValue + Math.Pow(g_aY.iValue, 2);
         }
 
     }
