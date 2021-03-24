@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItems\MenuItemCalculator.cs" />
+    <Compile Include="MenuItems\MenuItemData.cs" />
     <Compile Include="MenuItems\MenuItemExit.cs" />
     <Compile Include="MenuItems\MenuItemHelloWorld.cs" />
     <Compile Include="MenuItems\MenuItemTemplate.cs" />

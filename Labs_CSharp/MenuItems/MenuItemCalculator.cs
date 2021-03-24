@@ -20,7 +20,7 @@ namespace Labs_CSharp.MenuItems
     public class MenuItemCalculator : MenuItemTemplate
     {
         //Текущая формула
-        private string _formula = "X/Z+Y^2";
+        private string g_Formula = "X/Z+Y^2";
 
         //Аргументы для расчета формулы
         private Argument g_aX = new Argument { sDeskription = "X" };
@@ -28,18 +28,18 @@ namespace Labs_CSharp.MenuItems
         private Argument g_aZ = new Argument { sDeskription = "Z" };
         //    private Argument g_aX, g_aY, g_aZ;
 
-        public string Formula { get { return _formula; } set { _formula = value; } }
+        public string Formula { get { return g_Formula; } set { g_Formula = value; } }
 
         // Заголовок меню "Calculator"
-        public override string Title { get { return "Calc: " + _formula; } }
+        public override string Title { get { return "Calc: " + g_Formula; } }
 
         //Основной метод меню "Calc"
         public override void Execute()
         {
-            Console.WriteLine("Расчет по формуле {0}", _formula);
-            Console.WriteLine("Для расчета пожалуйста через пробел введите аргументы X,Y,Z: ");
+            Console.WriteLine("Расчет по формуле {0}", g_Formula);
+            Console.WriteLine("Для расчета пожалуйста через пробел введите аргументы X,Y,Z (Z>0): ");
             string[] sArguments = Console.ReadLine().Split(' ');
-            double dResult = 0.0;
+            double dResult;
             if (!CheckingArguments(sArguments))
             {
                 bool bIsCurrent = false;
@@ -81,12 +81,12 @@ namespace Labs_CSharp.MenuItems
             int iTempResult = 0;
             while (!bIsCorrect)
             {
-                bIsCorrect = isNotNumber(sTemp, argDeskription);
+                bIsCorrect = IsNotNumber(sTemp, argDeskription);
                 if (bIsCorrect)
                 {
                     iTempResult = Int32.Parse(sTemp);
                     if (argDeskription.Equals("Z"))
-                        bIsCorrect = isNotZero(iTempResult);
+                        bIsCorrect = IsNotZero(iTempResult);
                 }
                 if (!bIsCorrect)
                     sTemp = Console.ReadLine();
@@ -96,7 +96,7 @@ namespace Labs_CSharp.MenuItems
         }
 
         //Проверка на ноль
-        private bool isNotZero(int a)
+        private bool IsNotZero(int a)
         {
             if (a.Equals(0))
             {
@@ -107,7 +107,7 @@ namespace Labs_CSharp.MenuItems
         }
 
         //Провекра на число
-        private bool isNotNumber(string value, string description)
+        private bool IsNotNumber(string value, string description)
         {
             if (!Int32.TryParse(value, out int num))
             {

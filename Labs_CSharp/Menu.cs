@@ -49,6 +49,9 @@ namespace Labs_CSharp
                 case 2:
                     MenuItems[2].Execute();
                     break;
+                case 3:
+                    MenuItems[3].Execute();
+                    break;
                 default:
                     Console.WriteLine("ОШИБКА: Не существует элемента меню под указанным номером ({0})! Пожалуйста повторите попытку!", iValue);
                     break;
