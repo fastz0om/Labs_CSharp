@@ -37,25 +37,8 @@ namespace Labs_CSharp
         public static void Execute()
         {
             ShowMenu();
-            int iValue = CheckingInt();
-            switch (iValue)
-            {
-                case 0:
-                    MenuItems[0].Execute();
-                    break;
-                case 1:
-                    MenuItems[1].Execute();
-                    break;
-                case 2:
-                    MenuItems[2].Execute();
-                    break;
-                case 3:
-                    MenuItems[3].Execute();
-                    break;
-                default:
-                    Console.WriteLine("ОШИБКА: Не существует элемента меню под указанным номером ({0})! Пожалуйста повторите попытку!", iValue);
-                    break;
-            }
+            int iValue = ReadInteger();
+            SelectMenuItem(iValue);
         }
 
         //Метод, для отображения меню
@@ -70,8 +53,34 @@ namespace Labs_CSharp
             }
         }
 
-        //Метод, осуществляющий проверку на корректность введённого элемента меню.
-        private static int CheckingInt()
+        //Метод выбора введенного элемента меню
+        private static void SelectMenuItem(int value)
+        {
+            switch (value)
+            {
+                case 0:
+                    MenuItems[0].Execute();
+                    break;
+                case 1:
+                    MenuItems[1].Execute();
+                    break;
+                case 2:
+                    MenuItems[2].Execute();
+                    break;
+                case 3:
+                    MenuItems[3].Execute();
+                    break;
+                case 4:
+                    MenuItems[4].Execute();
+                    break;
+                default:
+                    Console.WriteLine("ОШИБКА: Не существует элемента меню под указанным номером ({0})! Пожалуйста повторите попытку!", value);
+                    break;
+            }
+        }
+
+        //Метод, считывающий строку и преобразующий её в числовое значение
+        private static int ReadInteger()
         {
             while (true)
             {

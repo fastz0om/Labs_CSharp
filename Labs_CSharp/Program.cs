@@ -15,6 +15,7 @@ namespace Labs_CSharp
             Menu.AddMenuItem(new MenuItems.MenuItemHelloWorld());
             Menu.AddMenuItem(new MenuItems.MenuItemCalculator());
             Menu.AddMenuItem(new MenuItems.MenuItemData());
+            Menu.AddMenuItem(new MenuItems.MenuItemStrings());
             
             while (true)
             {

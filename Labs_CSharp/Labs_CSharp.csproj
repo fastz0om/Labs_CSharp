@@ -48,6 +48,7 @@
     <Compile Include="MenuItems\MenuItemData.cs" />
     <Compile Include="MenuItems\MenuItemExit.cs" />
     <Compile Include="MenuItems\MenuItemHelloWorld.cs" />
+    <Compile Include="MenuItems\MenuItemStrings.cs" />
     <Compile Include="MenuItems\MenuItemTemplate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
